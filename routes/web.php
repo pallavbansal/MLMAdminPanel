@@ -17,24 +17,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/AllRegisteredUsers', function () {
-    return view('AllRegisteredUsers');
+Route::get('/admin/AllRegisteredUsers', function () {
+    return view('admin.AllRegisteredUsers');
 });
 
-Route::get('/AllOrders', function () {
-    return view('AllOrders');
+Route::get('/admin/AllOrders', function () {
+    return view('admin.AllOrders');
 });
 
-Route::get('/Register', function () {
-    return view('RegisterFirstLevelAccount');
+Route::get('/admin/Register', function () {
+    return view('admin.RegisterFirstLevelAccount');
 });
 
-Route::get('/UploadCategories', function () {
-    return view('UploadCategories');
+Route::get('/admin/UploadCategories', function () {
+    return view('admin.UploadCategories');
 });
 
-Route::get('/UploadProducts', function () {
-    return view('UploadProducts');
+Route::get('/admin/UploadProducts', function () {
+    return view('admin.UploadProducts');
 });
 
 /* Auto-generated admin routes */
