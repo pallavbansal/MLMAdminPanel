@@ -15,6 +15,10 @@
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/AllOrders') }}"><i class="nav-icon icon-pin"></i> {{ __('All Orders') }}</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/UploadCategories') }}"><i class="nav-icon icon-pin"></i> {{ __('Upload Categories') }}</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url('admin/UploadProducts') }}"><i class="nav-icon icon-pin"></i> {{ __('Upload Product') }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/UploadEquipements') }}"><i class="nav-icon icon-pin"></i> {{ __('Upload Equipement') }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/UploadMonitoringProvider') }}"><i class="nav-icon icon-pin"></i> {{ __('Upload Monitoring Provider') }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/UploadPackageType') }}"><i class="nav-icon icon-pin"></i> {{ __('Upload PackageType') }}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url('admin/UploadSystemPanel') }}"><i class="nav-icon icon-pin"></i> {{ __('Upload System Panel') }}</a></li>
             {{-- Do not delete me :) I'm also used for auto-generation menu items --}}
             {{--<li class="nav-item"><a class="nav-link" href="{{ url('admin/configuration') }}"><i class="nav-icon icon-settings"></i> {{ __('Configuration') }}</a></li>--}}
         </ul>

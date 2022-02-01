@@ -37,6 +37,22 @@ Route::get('/admin/UploadProducts', function () {
     return view('admin.UploadProducts');
 });
 
+Route::get('/admin/UploadEquipements', function () {
+    return view('admin.UploadEquipements');
+});
+
+Route::get('/admin/UploadMonitoringProvider', function () {
+    return view('admin.UploadMonitoringProvider');
+});
+
+Route::get('/admin/UploadPackageType', function () {
+    return view('admin.UploadPackageType');
+});
+
+Route::get('/admin/UploadSystemPanel', function () {
+    return view('admin.UploadSystemPanel');
+});
+
 /* Auto-generated admin routes */
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
