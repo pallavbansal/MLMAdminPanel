@@ -10,22 +10,39 @@ $(document).ready(function () {
 });
 </script>
 @endpush
+@push('page_style')
+<style>
+.pagination {
+    float: right;
+}
+#SystemPanelTable_filter {
+    float: right;
+}
+</style>
+@endpush
 @section('body')
     <div class="row shadow p-3 mb-5 bg-white rounded">
         <div class="col-md-6" style="border-right: 1px dashed #333;">
-            <form>
+            <form action="CreateSystemPanel" method="POST">
+                @csrf
             <h3><span style="color: #4273FA;">System Panel Upload</span></h3>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="inputName">Name</label>
-                        <input type="name" class="form-control" id="inputName" placeholder="System Panel Name">
+                        <label for="system_panel_name">Name</label>
+                        <input type="name" class="form-control" id="system_panel_name" name="system_panel_name" placeholder="System Panel Name">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="inputCategory">Select Pacakge Type</label>
-                        <select id="inputCategory" class="form-control">
+                        <label for="package">Select Pacakge Type</label>
+                        <select id="package" name="package" class="form-control">
                             <option selected>Choose Package Type</option>
-                            <option>...</option>
+                            @foreach ($package as $item)
+                                <option value="{{$item->id }}">{{$item->package_name}}</option>
+                            @endforeach
                         </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="system_panel_price">Price</label>
+                        <input type="number" class="form-control" id="system_panel_price" name="system_panel_price" placeholder="System Panel Price">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Upload System Panel</button>
@@ -38,28 +55,17 @@ $(document).ready(function () {
                 <thead>
                 <th>System Panel</th>
                 <th>Package Type</th>
+                <th>Action</th>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>System panel one</td>
-                    <td>Package one</td>
-                </tr>
-                <tr>
-                <td>System panel two</td>
-                    <td>Package two</td>
-                </tr>
-                <tr>
-                    <td>System panel three</td>
-                    <td>Package three</td>
-                </tr>
-                <tr>
-                    <td>System panel four</td>
-                    <td>Package four</td>
-                </tr>
-                <tr>
-                    <td>System panel Five</td>
-                    <td>Package Five</td>
-                </tr>
+                    @foreach ($system_panel as $item)
+                    <tr>
+                        <td>{{$item->system_panel_name}}</td>
+                        <td>{{$item->package_name}}</td>
+                        <td><a href="DeleteSystemPanel/{{$item->id}}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>
