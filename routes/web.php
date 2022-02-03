@@ -41,19 +41,30 @@ Route::get('/admin/UploadEquipements', function () {
     return view('admin.UploadEquipements');
 });
 
-Route::get('/admin/UploadMonitoringProvider', function () {
-    return view('admin.UploadMonitoringProvider');
-});
+Route::get('/admin/UploadMonitoringProvider','App\Http\Controllers\CompanyController@show');
+Route::get('/admin/DeleteMonitoringProvider/{id}','App\Http\Controllers\CompanyController@destroy');
+Route::post('/admin/CreateMonitoringProvider','App\Http\Controllers\CompanyController@store');
 
-Route::get('/admin/UploadPackageType', function () {
-    return view('admin.UploadPackageType');
-});
+Route::get('/admin/UploadPackageType','App\Http\Controllers\PackageController@show');
+Route::get('/admin/DeletePackageType/{id}','App\Http\Controllers\PackageController@destroy');
+Route::post('/admin/CreatePackageType','App\Http\Controllers\PackageController@store');
 
-Route::get('/admin/UploadSystemPanel', function () {
-    return view('admin.UploadSystemPanel');
-});
+Route::get('/admin/UploadSystemPanel','App\Http\Controllers\SystemPanelController@show');
+Route::get('/admin/DeleteSystemPanel/{id}','App\Http\Controllers\SystemPanelController@destroy');
+Route::post('/admin/CreateSystemPanel','App\Http\Controllers\SystemPanelController@store');
 
-/* Auto-generated admin routes */
+Route::get('/admin/UploadEquipements','App\Http\Controllers\EquipmentController@show');
+Route::get('/admin/DeleteEquipements/{id}','App\Http\Controllers\EquipmentController@destroy');
+Route::post('/admin/CreateEquipements','App\Http\Controllers\EquipmentController@store');
+
+// Route::get('/admin/UploadPackageType', function () {
+//     return view('admin.UploadPackageType');
+// });
+
+// Route::get('/admin/UploadSystemPanel', function () {
+//     return view('admin.UploadSystemPanel');
+// });
+
 Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->group(static function () {
     Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->name('admin/')->group(static function() {
         Route::prefix('admin-users')->name('admin-users/')->group(static function() {

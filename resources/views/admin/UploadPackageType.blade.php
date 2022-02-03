@@ -10,21 +10,35 @@ $(document).ready(function () {
 });
 </script>
 @endpush
+@push('page_style')
+<style>
+.pagination {
+    float: right;
+}
+#SystemPanelTable_filter {
+    float: right;
+}
+</style>
+@endpush
 @section('body')
     <div class="row shadow p-3 mb-5 bg-white rounded">
         <div class="col-md-6" style="border-right: 1px dashed #333;">
-            <form>
+            <form action="CreatePackageType" method="POST">
+                @csrf
             <h3><span style="color: #4273FA;">Package Type Upload</span></h3>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="inputName">Package Name</label>
-                        <input type="name" class="form-control" id="inputName" placeholder="Package Type Name">
+                        <label for="package_name">Package Name</label>
+                        <input type="name" class="form-control" id="package_name" name="package_name" placeholder="Package Type Name">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputCategory">Select Monitoring Provider</label>
-                        <select id="inputCategory" class="form-control">
+                        <select id="company" name="company" class="form-control">
                             <option selected>Choose Monitoring Provider</option>
-                            <option>...</option>
+                            @foreach ($company as $item)
+                                <option value="{{$item->id}}">{{$item->company_name}}</option>
+                            @endforeach
+                           
                         </select>
                     </div>
                 </div>
@@ -39,26 +53,14 @@ $(document).ready(function () {
                 <th>Monitoring Provider</th>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Package</td>
-                    <td>Company one</td>
-                </tr>
-                <tr>
-                    <td>Package</td>
-                    <td>Company two</td>
-                </tr>
-                <tr>
-                    <td>Package</td>
-                    <td>Company three</td>
-                </tr>
-                <tr>
-                    <td>Package</td>
-                    <td>Company four</td>
-                </tr>
-                <tr>
-                    <td>Package</td>
-                    <td>Company Five</td>
-                </tr>
+                    @foreach ($package as $item)
+                    <tr>
+                        <td>{{$item->package_name}}</td>
+                        <td>{{$item->company_name}}</td>
+                        <td><a href="DeletePackageType/{{$item->id}}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>
