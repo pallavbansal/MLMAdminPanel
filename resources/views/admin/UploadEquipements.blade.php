@@ -1,19 +1,62 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-@extends('brackets/admin-ui::admin.layout.default')
+@extends('admin.layout.master')
+@push('page_script')
+<script>
+    /*  ==========================================
+    SHOW UPLOADED IMAGE
+* ========================================== */
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
 
-@section('title', trans('admin.admin-user.actions.create'))
+        reader.onload = function (e) {
+            $('#imageResult')
+                .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
-@section('body')
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome Icon Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
+$(function () {
+    $('#upload').on('change', function () {
+        readURL(input);
+    });
+});
+
+$(document).ready(function () {
+    $('#EquipementsTable').DataTable({
+        language: {
+        searchPlaceholder: "Search records"
+    }
+    });
+});
+
+
+const regex = /^[a-zA-Z ]+$/;
+function validate(e) {
+  const chars = e.target.value.split('');
+  const char = chars.pop();
+  if (!regex.test(char)) {
+    e.target.value = chars.join('');
+    console.log(`${char} is not a valid character.`);
+  }
+}
+document.querySelector('#equipment_name').addEventListener('input', validate);
+
+const regex2 = /[0-9]/;
+function validateNumber(e) {
+  const chars = e.target.value.split('');
+  const char = chars.pop();
+  if (!regex2.test(char)) {
+    e.target.value = chars.join('');
+    console.log(`${char} is not a valid character.`);
+  }
+}
+document.querySelector('#equipment_price').addEventListener('input', validateNumber);
+
+</script>
+@endpush
+@push('page_style')
+<style>
         #upload {
             opacity: 0;
         }
@@ -49,8 +92,8 @@
             position: relative;
         }
    </style>
-</head>
-<body class="antialiased">
+@endpush
+@section('body')
     <div class="row shadow p-3 mb-5 bg-white rounded">
         <div class="col-md-6" style="border-right: 1px dashed #333;">
             <form method="post" action="CreateEquipements" enctype="multipart/form-data">
@@ -102,59 +145,13 @@
                     <tr>
                         <td>{{$item->equipment_name}}</td>
                         <td>{{$item->price }}</td>
-                        <td><img src="{{$item->equipment_media_url}}" style="width:150px" ></td>
+                        <td><img src="{{$item->equipment_media_url}}" style="width:80px" ></td>
                         <td>{{$item->package_name }}</td>
-                        <td><a href="DeleteEquipements/{{$item->id}}" class="btn btn-danger">Delete</a></td>
+                        <td><a href="DeleteEquipements/{{$item->id}}" class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-</body>
-
-<script>
-    /*  ==========================================
-    SHOW UPLOADED IMAGE
-* ========================================== */
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#imageResult')
-                .attr('src', e.target.result);
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-$(function () {
-    $('#upload').on('change', function () {
-        readURL(input);
-    });
-});
-
-/*  ==========================================
-    SHOW UPLOADED IMAGE NAME
-* ========================================== */
-var input = document.getElementById( 'upload' );
-var infoArea = document.getElementById( 'upload-label' );
-
-input.addEventListener( 'change', showFileName );
-function showFileName( event ) {
-  var input = event.srcElement;
-  var fileName = input.files[0].name;
-  infoArea.textContent = 'File name: ' + fileName;
-}
-
-$(document).ready(function () {
-    $('#EquipementsTable').DataTable({
-        language: {
-        searchPlaceholder: "Search records"
-    }
-    });
-});
-</script>
 @endsection
-</html>

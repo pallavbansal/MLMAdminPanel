@@ -8,6 +8,19 @@ $(document).ready(function () {
     }
     });
 });
+
+const regex = /^[a-zA-Z ]+$/;
+function validate(e) {
+  const chars = e.target.value.split('');
+  const char = chars.pop();
+  if (!regex.test(char)) {
+    e.target.value = chars.join('');
+    console.log(`${char} is not a valid character.`);
+  }
+}
+document.querySelector('#package_name').addEventListener('input', validate);
+
+
 </script>
 @endpush
 @push('page_style')
@@ -51,13 +64,14 @@ $(document).ready(function () {
                 <thead>
                 <th>Package Type</th>
                 <th>Monitoring Provider</th>
+                <th>Action</th>
                 </thead>
                 <tbody>
                     @foreach ($package as $item)
                     <tr>
                         <td>{{$item->package_name}}</td>
                         <td>{{$item->company_name}}</td>
-                        <td><a href="DeletePackageType/{{$item->id}}" class="btn btn-danger">Delete</a></td>
+                        <td><a href="DeletePackageType/{{$item->id}}" class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     @endforeach
 
