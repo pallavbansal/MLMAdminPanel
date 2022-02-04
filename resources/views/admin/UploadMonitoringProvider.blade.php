@@ -8,6 +8,17 @@ $(document).ready(function () {
     }
     });
 });
+const regex = /^[a-zA-Z ]+$/;
+function validate(e) {
+  const chars = e.target.value.split('');
+  const char = chars.pop();
+  if (!regex.test(char)) {
+    e.target.value = chars.join('');
+    console.log(`${char} is not a valid character.`);
+  }
+}
+document.querySelector('#company_name').addEventListener('input', validate);
+
 </script>
 @endpush
 @push('page_style')
@@ -21,6 +32,15 @@ $(document).ready(function () {
 </style>
 @endpush
 @section('body')
+<div class="alert alert-success" role="alert" style="width: 300px;
+bottom: 0px;
+right: 0px;
+z-index: 5000;
+position: fixed;
+font-weight: 600;">
+ Operation Successful
+</div>
+<div><div class="vue-notification-group" style="width: 300px; bottom: 0px; right: 0px;"><span></span></div></div>
     <div class="row shadow p-3 mb-5 bg-white rounded">
         <div class="col-md-6" style="border-right: 1px dashed #333;">
             <form action="CreateMonitoringProvider" method="post">
@@ -46,7 +66,7 @@ $(document).ready(function () {
                     @foreach ($company as $item)
                     <tr>
                         <td>{{$item->company_name}}</td>
-                        <td><a href="DeleteMonitoringProvider/{{$item->id}}" class="btn btn-danger">Delete</a></td>
+                        <td><a href="DeleteMonitoringProvider/{{$item->id}}" class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     @endforeach
                 </tbody>
