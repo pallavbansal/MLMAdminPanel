@@ -8,6 +8,30 @@ $(document).ready(function () {
     }
     });
 });
+
+const regex = /^[a-zA-Z ]+$/;
+function validate(e) {
+  const chars = e.target.value.split('');
+  const char = chars.pop();
+  if (!regex.test(char)) {
+    e.target.value = chars.join('');
+    console.log(`${char} is not a valid character.`);
+  }
+}
+document.querySelector('#system_panel_name').addEventListener('input', validate);
+
+
+const regex2 = /[0-9]/;
+function validateNumber(e) {
+  const chars = e.target.value.split('');
+  const char = chars.pop();
+  if (!regex2.test(char)) {
+    e.target.value = chars.join('');
+    console.log(`${char} is not a valid character.`);
+  }
+}
+document.querySelector('#system_panel_price').addEventListener('input', validateNumber);
+
 </script>
 @endpush
 @push('page_style')
@@ -58,7 +82,7 @@ $(document).ready(function () {
                     <tr>
                         <td>{{$item->system_panel_name}}</td>
                         <td>{{$item->package_name}}</td>
-                        <td><a href="DeleteSystemPanel/{{$item->id}}" class="btn btn-danger">Delete</a></td>
+                        <td><a href="DeleteSystemPanel/{{$item->id}}" class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     @endforeach
 
