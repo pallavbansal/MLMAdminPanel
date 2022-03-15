@@ -17,6 +17,15 @@ class CreatePackagesTable extends Migration
             $table->id();
             $table->string('package_name');
             $table->integer('company_id');
+            $table->integer('admin_percentage');
+            $table->integer('price');
+            $table->integer('a1_percentage');
+            $table->integer('a2_percentage');
+            $table->integer('a3_percentage');
+            $table->integer('admin_percentage2');
+            $table->integer('a1_percentage2');
+            $table->integer('a2_percentage2');
+            $table->integer('a3_percentage2');
             $table->timestamps();
         });
     }

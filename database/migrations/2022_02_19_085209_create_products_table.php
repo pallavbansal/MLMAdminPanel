@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSystemPanelsTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateSystemPanelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('system_panels', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('system_panel_name');
-            $table->integer('package_id');
+            $table->string('product_name');
+            $table->integer('category_id');
+            $table->string('price');
+            $table->intstringeger('product_media');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateSystemPanelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('system_panels');
+        Schema::dropIfExists('products');
     }
 }

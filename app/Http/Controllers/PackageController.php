@@ -40,6 +40,15 @@ class PackageController extends Controller
         $package = new package;
         $package->package_name = $request->input('package_name');
         $package->company_id = $request->input('company');
+        $package->price = $request->input('price');
+        $package->admin_percentage = $request->input('admin_percentage');
+        $package->a1_percentage = $request->input('a1_percentage');
+        $package->a2_percentage = $request->input('a2_percentage');
+        $package->a3_percentage = $request->input('a3_percentage');
+        $package->admin_percentage2 = $request->input('admin_percentage2');
+        $package->a1_percentage2 = $request->input('a1_percentage2');
+        $package->a2_percentage2 = $request->input('a2_percentage2');
+        $package->a3_percentage2 = $request->input('a3_percentage2');
         $package->save();
         $request->session()->flash('msg',"Date Saved !");
         return redirect('admin/UploadPackageType');
@@ -54,7 +63,7 @@ class PackageController extends Controller
     public function show(package $package)
     {
         $package = DB::table('packages')
-          ->select('packages.id','packages.package_name','packages.company_id','companies.company_name')
+          ->select('packages.id','packages.package_name','packages.company_id','companies.company_name','packages.price','packages.admin_percentage','packages.a1_percentage','packages.a2_percentage','packages.a3_percentage','packages.admin_percentage2','packages.a1_percentage2','packages.a2_percentage2','packages.a3_percentage2')
           ->join('companies','companies.id','=','packages.company_id')
           ->get();
           

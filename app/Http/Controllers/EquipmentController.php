@@ -53,6 +53,7 @@ class EquipmentController extends Controller
         $equipment->equipment_name = $request->input('equipment_name');
         $equipment->price = $request->input('equipment_price');
         $equipment->package_id = $request->input('package');
+        $equipment->description = $request->input('description');
         $equipment->equipment_media_url = '/storage/uploads/'.$name;//$request->input('equipment_media_url');
         $equipment->save();
         $request->session()->flash('msg',"Date Saved !");
@@ -69,7 +70,7 @@ class EquipmentController extends Controller
     public function show(Equipment $equipment)
     {
         $eqip = DB::table('equipment')
-        ->select('equipment.id','equipment.equipment_name','equipment.price','equipment.equipment_media_url','equipment.package_id','packages.package_name')
+        ->select('equipment.id','equipment.equipment_name','equipment.price','equipment.equipment_media_url','equipment.package_id','equipment.description','packages.package_name')
         ->join('packages','packages.id','=','equipment.package_id')
         ->get();
 

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\company;
 use App\Models\ParentCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class CompanyController extends Controller
+class ParentCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,37 +35,32 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $company = new Company;
-        $company->company_name = $request->input('company_name');
-        $company->parent_category_id = $request->input('parent_category_id');
-        $company->save();
+        $parentCategory = new ParentCategory();
+        $parentCategory->parent_category_name = $request->input('category_name');
+        $parentCategory->max_time = $request->input('max_time');
+        $parentCategory->save();
         $request->session()->flash('msg',"Date Saved !");
-        return redirect('admin/UploadMonitoringProvider');
-
+        return redirect('admin/ParentCategories');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\company  $company
+     * @param  \App\Models\ParentCategory  $parent_category
      * @return \Illuminate\Http\Response
      */
-    public function show(company $company)
+    public function show(ParentCategory $parentCategory)
     {
-        $company = DB::table('companies')
-        ->select('companies.id','companies.company_name','companies.parent_category_id','parent_categories.parent_category_name')
-        ->join('parent_categories','parent_categories.id','=','companies.parent_category_id')
-        ->get();
-        return view('admin.UploadMonitoringProvider')->with('company',$company)->with('parentCategory',ParentCategory::all());
+        return view('admin.ParentCategories')->with('parentCategory',ParentCategory::all());
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\company  $company
+     * @param  \App\Models\ParentCategory  $parent_category
      * @return \Illuminate\Http\Response
      */
-    public function edit(company $company)
+    public function edit(ParentCategory $parentCategory)
     {
         //
     }
@@ -76,10 +69,10 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\company  $company
+     * @param  \App\Models\ParentCategory  $parent_category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, company $company)
+    public function update(Request $request, ParentCategory $parentCategory)
     {
         //
     }
@@ -87,12 +80,12 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\company  $company
+     * @param  \App\Models\ParentCategory  $parent_category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(company $company,$id)
+    public function destroy(ParentCategory $parentCategory,$id)
     {
-        company::destroy(array('id',$id));
-        return redirect('admin/UploadMonitoringProvider');
+        parentCategory::destroy(array('id',$id));
+        return redirect('admin/ParentCategories');
     }
 }
