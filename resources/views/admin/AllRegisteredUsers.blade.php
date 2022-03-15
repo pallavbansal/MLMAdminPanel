@@ -2,15 +2,26 @@
 @push('page_script')
 <script>
 $(document).ready(function () {
-  $('#transactionTable').DataTable(
-      {
+    $('#transactionTable').DataTable({
         language: {
         searchPlaceholder: "Search records"
     }
-      }
-  );
+    });
 });
 </script>
+@endpush
+@push('page_style')
+<style>
+.pagination {
+    float: right;
+}
+#SystemPanelTable_filter {
+    float: right;
+}
+.dataTables_filter {
+    float: right;
+}
+</style>
 @endpush
 @section('body')
     <div class="row shadow p-3 mb-5 bg-white rounded">
@@ -23,28 +34,26 @@ $(document).ready(function () {
                 <th>Email ID</th>
                 <th>Phone No.</th>
                 <th>DL Photo</th>
-                <th>Earnings</th>
+                <th>Bank Account</th>
+                <th>IFSC Code</th>
+                <th>Bank Account Name</th>
                 <th>Account Level</th>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Anthony</td>
-                    <td>Anthony@gmail.com</td>
-                    <td>7833929341</td>
-                    <td><img></img></td>
-                    <td>20000₹</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Anthony</td>
-                    <td>Anthony@gmail.com</td>
-                    <td>7833929341</td>
-                    <td><img></img></td>
-                    <td>20000₹</td>
-                    <td>2</td>
-                </tr>
+                    @foreach ($users as $item)
+                    <tr>
+                        <td>{{$item->id}}</td>
+                        <td>{{$item->name}}</td>
+                        <td>{{$item->email}}</td>
+                        <td>{{$item->phone_number}}</td>
+                        <td>{{$item->dl_number}}</td>
+                        <td>{{$item->phone_number}}</td>
+                        <td>{{$item->ifsc}}</td>
+                        <td>{{$item->account_name}}</td>
+                        <td>{{$item->account_type}}</td>
+                        
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

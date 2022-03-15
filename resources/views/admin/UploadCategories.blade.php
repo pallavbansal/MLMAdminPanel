@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-@extends('brackets/admin-ui::admin.layout.default')
-
-@section('title', trans('admin.admin-user.actions.create'))
-
-@section('body')
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome Icon Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        #upload {
+@extends('admin.layout.master')
+@push('page_style')
+<style>
+    #upload {
             opacity: 0;
         }
 
@@ -43,50 +30,67 @@
             font-size: 0.8rem;
             z-index: 1;
         }
-
         .image-area img {
             z-index: 2;
             position: relative;
         }
-   </style>
-</head>
-<body class="antialiased">
-<form>
+</style>
+@endpush
+@section('body')
+<div class="row shadow p-3 mb-5 bg-white rounded">
+    <div class="col-4" style="border-right: 1px dashed #333;">
+    <form action="CreateCategory" method="POST">
+        @csrf
 <H2><strong>Upload Categories</strong></H2><br>
   <div class="form-row">
     <div class="form-group">
       <label for="inputCity">Category</label>
-      <input type="text" class="form-control" id="inputCity">
+      <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Category Name">
     </div>
   </div>
   <div class="form-row">
     <div class="form-group">
       <label for="inputState">Sub-category</label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
+      <select id="parent_category" class="form-control" name="parent_category">
+        <option value="0">Parent Category</option>
+        @foreach ($categories as $item)
+        <option value="{{$item->id}}">{{$item->category_name}}</option>
+        @endforeach
       </select>
     </div>
   </div>
   <div class="form-row">
         <div class="form-group">
         <label for="inputPhoto">Upload Photo</label>
-            <div class="row">
-                <!-- Upload image input-->
-                <div class="input-group mb-3 px-2 py-2 shadow-sm">
-                    <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
-                    <!-- <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
-                    <div class="input-group-append">
-                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-                    </div> -->
-                </div>
-                <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
-            </div>
+         
+        <input type="file" class="form-control" id="" name="" placeholder="Category Photo">
+                {{-- <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div> --}}
+           
         </div>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Upload</button>
 </form>
-</body>
+    </div>
+    <div class="col-md-8">
+      <h3><span style="color: #4273FA;">Monitoring Provider List</span></h3>
+          <table id="MonitoringTable" class="table table-hover table-listing" style="width:100%">
+              <thead>
+              <th>Category Name</th>
+              <th>Parent Category</th>
+              <th>Action</th>
+              </thead>
+              <tbody>
+                  @foreach ($categories as $item)
+                  <tr>
+                      <td>{{$item->category_name}}</td>
+                      <td>{{$item->id}}</td>
+                      <td><a href="DeleteCategories/{{$item->id}}" class="btn btn-danger">Delete</a></td>
+                  </tr>
+                  @endforeach
+              </tbody>
+          </table>
+      </div>
+</div>
 <script>
     /*  ==========================================
     SHOW UPLOADED IMAGE

@@ -1,126 +1,93 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-@extends('brackets/admin-ui::admin.layout.default')
-
-@section('title', trans('admin.admin-user.actions.create'))
-
+@extends('admin.layout.master')
 @section('body')
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome Icon Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        #upload {
-            opacity: 0;
-        }
 
-        #upload-label {
-            position: absolute;
-            top: 50%;
-            left: 1rem;
-            transform: translateY(-50%);
-        }
-
-        .image-area {
-            border: 2px dashed rgba(255, 255, 255, 0.7);
-            padding: 1rem;
-            position: relative;
-        }
-
-        .image-area::before {
-            content: 'Uploaded image result';
-            color: #fff;
-            font-weight: bold;
-            text-transform: uppercase;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.8rem;
-            z-index: 1;
-        }
-
-        .image-area img {
-            z-index: 2;
-            position: relative;
-        }
-   </style>
-</head>
-<body class="antialiased">
-<form>
+<div class="row p-3 mb-5 bg-white rounded">
+    <div class="col-4 " style="border-right: 1px dashed #333;">
+<form action="CreateProduct" method="POST" enctype="multipart/form-data">
+  @csrf
+    <H2><strong>Upload Products</strong></H2><br>
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputName">Name</label>
-      <input type="name" class="form-control" id="inputName" placeholder="Name">
+    <div class="form-group col-md-6" >
+      <label for="product_name">Name</label>
+      <input type="name" class="form-control" id="product_name" placeholder="Name" name="product_name">
     </div>
     <div class="form-group col-md-6">
-      <label for="inputCategory">Product Category</label>
-      <select id="inputCategory" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
+      <label for="category_id">Product Category</label>
+      <select id="category_id" class="form-control" name="category_id">
+        <option value="0">Select Category</option>
+        @foreach ($categories as $item)
+        <option value="{{$item->id}}">{{$item->category_name}}</option>
+        @endforeach
       </select>
     </div>
   </div>
   <div class="form-group">
-    <label for="inputPrice">Price</label>
-    <input type="number" class="form-control" id="inputPrice" placeholder="1,000">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price" placeholder="Product Price" name="price">
   </div>
   <div class="form-group">
-  <label for="inputPhoto">Upload Photo</label>
-      <div class="row">
-            <!-- Upload image input-->
-            <div class="input-group mb-3 px-2 py-2 shadow-sm">
-                <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
-                <!-- <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
-                <div class="input-group-append">
-                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-                </div> -->
-            </div>
-            <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
-      </div>
+  <label for="media">Upload Photo</label>
+    <input id="media" name="media" type="file" class="form-control border-0" >
   </div>
   <button type="submit" class="btn btn-primary">Upload Product</button>
 </form>
-</body>
+</div>
+<div class="col-md-8">
+    <H2><strong>Uploaded Products List</strong></H2><br>
+        <table id="MonitoringTable" class="table table-hover table-listing" style="width:100%">
+            <thead>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Photo</th>
+            <th>Action</th>
+            </thead>
+            <tbody>
+                @foreach ($products as $item)
+                <tr>
+                    <td>{{$item->product_name}}</td>
+                    <td>{{$item->category_name}}</td>
+                    <td>$ {{$item->price}}</td>
+                    <td><img src="{{$item->product_media_url}}" style="width:150px" ></td>
+                    <td><a href="DeleteProduct/{{$item->id}}" class="btn btn-danger">Delete</a></td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <script>
-    /*  ==========================================
-    SHOW UPLOADED IMAGE
-* ========================================== */
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
+// function readURL(input) {
+//     if (input.files && input.files[0]) {
+//         var reader = new FileReader();
 
-        reader.onload = function (e) {
-            $('#imageResult')
-                .attr('src', e.target.result);
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
+//         reader.onload = function (e) {
+//             $('#imageResult')
+//                 .attr('src', e.target.result);
+//         };
+//         reader.readAsDataURL(input.files[0]);
+//     }
+// }
 
-$(function () {
-    $('#upload').on('change', function () {
-        readURL(input);
-    });
-});
+// $(function () {
+//     $('#upload').on('change', function () {
+//         readURL(input);
+//     });
+// });
 
 /*  ==========================================
     SHOW UPLOADED IMAGE NAME
 * ========================================== */
-var input = document.getElementById( 'upload' );
-var infoArea = document.getElementById( 'upload-label' );
+// var input = document.getElementById( 'upload' );
+// var infoArea = document.getElementById( 'upload-label' );
 
-input.addEventListener( 'change', showFileName );
-function showFileName( event ) {
-  var input = event.srcElement;
-  var fileName = input.files[0].name;
-  infoArea.textContent = 'File name: ' + fileName;
-}
-</script>
+// input.addEventListener( 'change', showFileName );
+// function showFileName( event ) {
+//   var input = event.srcElement;
+//   var fileName = input.files[0].name;
+//   infoArea.textContent = 'File name: ' + fileName;
+// }
+// </script>
 @endsection
 </html>

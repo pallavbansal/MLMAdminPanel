@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/AllRegisteredUsers', function () {
-    return view('admin.AllRegisteredUsers');
-});
+// Route::get('/admin/AllRegisteredUsers', function () {
+//     return view('admin.AllRegisteredUsers');
+// });
 
 Route::get('/admin/AllOrders', function () {
     return view('admin.AllOrders');
@@ -29,9 +29,7 @@ Route::get('/admin/Register', function () {
     return view('admin.RegisterFirstLevelAccount');
 });
 
-Route::get('/admin/UploadCategories', function () {
-    return view('admin.UploadCategories');
-});
+
 
 Route::get('/admin/UploadProducts', function () {
     return view('admin.UploadProducts');
@@ -57,6 +55,25 @@ Route::get('/admin/UploadEquipements','App\Http\Controllers\EquipmentController@
 Route::get('/admin/DeleteEquipements/{id}','App\Http\Controllers\EquipmentController@destroy');
 Route::post('/admin/CreateEquipements','App\Http\Controllers\EquipmentController@store');
 
+Route::get('/admin/Cat1Orders','App\Http\Controllers\Cat1OrderController@show');
+
+Route::get('/admin/AllRegisteredUsers','App\Http\Controllers\RegisteredUserController@show');
+
+Route::get('/admin/UploadCategories','App\Http\Controllers\CategoryController@show');
+Route::get('/admin/DeleteCategories/{id}','App\Http\Controllers\CategoryController@destroy');
+Route::post('/admin/CreateCategory','App\Http\Controllers\CategoryController@store');
+
+Route::get('/admin/ParentCategories','App\Http\Controllers\ParentCategoryController@show');
+Route::get('/admin/DeleteParentCategory/{id}','App\Http\Controllers\ParentCategoryController@destroy');
+Route::post('/admin/CreateParentCategory','App\Http\Controllers\ParentCategoryController@store');
+
+Route::get('/admin/UploadProducts','App\Http\Controllers\ProductController@show');
+Route::get('/admin/DeleteProduct/{id}','App\Http\Controllers\ProductController@destroy');
+Route::post('/admin/CreateProduct','App\Http\Controllers\ProductController@store');
+
+// Route::get('/admin/AllRegisteredUsers', function () {
+//     return view('admin.AllRegisteredUsers');
+// });
 // Route::get('/admin/UploadPackageType', function () {
 //     return view('admin.UploadPackageType');
 // });

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SystemPanel;
-use App\Models\package;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SystemPanelController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +25,7 @@ class SystemPanelController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -37,37 +36,36 @@ class SystemPanelController extends Controller
      */
     public function store(Request $request)
     {
-        $system_panel = new SystemPanel;
-        $system_panel->system_panel_name = $request->input('system_panel_name');
-        $system_panel->package_id = $request->input('package');
-        $system_panel->save();
+        $category = new Category();
+        $category->category_name = $request->input('category_name');
+        $category->parent_category = $request->input('parent_category');
+        $category->save();
         $request->session()->flash('msg',"Date Saved !");
-        return redirect('admin/UploadSystemPanel');
+        return redirect('admin/UploadCategories');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SystemPanel  $systemPanel
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(SystemPanel $systemPanel)
+    public function show(Category $category)
     {
-        $system_panel = DB::table('system_panels')
-        ->select('system_panels.id','system_panels.system_panel_name','system_panels.package_id','packages.package_name')
-        ->join('packages','packages.id','=','system_panels.package_id')
+        $categories = DB::table('categories')
+        ->select('*')
         ->get();
-
-      return view('admin.UploadSystemPanel')->with('package',package::all())->with('system_panel',$system_panel);
+   
+      return view('admin.UploadCategories')->with('categories',$categories);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SystemPanel  $systemPanel
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(SystemPanel $systemPanel)
+    public function edit(Category $category)
     {
         //
     }
@@ -76,10 +74,10 @@ class SystemPanelController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SystemPanel  $systemPanel
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SystemPanel $systemPanel)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -87,12 +85,12 @@ class SystemPanelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SystemPanel  $systemPanel
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SystemPanel $systemPanel,$id)
+    public function destroy(Category $category,$id)
     {
-        SystemPanel::destroy(array('id',$id));
-        return redirect('admin/UploadSystemPanel');
+        Category::destroy(array('id',$id));
+        return redirect('admin/UploadCategories');
     }
 }

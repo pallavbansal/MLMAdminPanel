@@ -46,16 +46,16 @@ document.querySelector('#system_panel_price').addEventListener('input', validate
 @endpush
 @section('body')
     <div class="row shadow p-3 mb-5 bg-white rounded">
-        <div class="col-md-6" style="border-right: 1px dashed #333;">
+        <div class="col-md-4" style="border-right: 1px dashed #333;">
             <form action="CreateSystemPanel" method="POST">
                 @csrf
             <h3><span style="color: #4273FA;">System Panel Upload</span></h3>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
+               
+                    <div class="form-group">
                         <label for="system_panel_name">Name</label>
                         <input type="name" class="form-control" id="system_panel_name" name="system_panel_name" placeholder="System Panel Name">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group">
                         <label for="package">Select Pacakge Type</label>
                         <select id="package" name="package" class="form-control">
                             <option selected>Choose Package Type</option>
@@ -64,16 +64,12 @@ document.querySelector('#system_panel_price').addEventListener('input', validate
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="system_panel_price">Price</label>
-                        <input type="number" class="form-control" id="system_panel_price" name="system_panel_price" placeholder="System Panel Price">
-                    </div>
-                </div>
+
                 <button type="submit" class="btn btn-primary">Upload System Panel</button>
             </form>
         </div>
         <hr>
-        <div class="col-md-6">
+        <div class="col-md-8">
         <h3><span style="color: #4273FA;">System Panel List</span></h3>
             <table id="SystemPanelTable" class="table table-hover table-listing" style="width:100%">
                 <thead>
